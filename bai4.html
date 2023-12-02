@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Clock Example</title>
+    <style>
+        #countdown {
+            font-size: 24px;
+            text-align: center;
+            margin: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="countdown"></div>
+
+<script>
+    // Thời gian kết thúc đếm ngược (đặt theo múi giờ UTC)
+    var countdownDate = new Date("Dec 31, 2023 23:59:59 UTC").getTime();
+
+    // Cập nhật đồng hồ đếm ngược mỗi 1 giây
+    var countdownInterval = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countdownDate - now;
+
+        // Tính toán thời gian còn lại
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Hiển thị thời gian còn lại
+        document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+        // Kết thúc đếm ngược khi đến thời gian cố định
+        if (distance < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById("countdown").innerHTML = "EXPIRED";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>

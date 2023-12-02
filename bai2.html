@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation Example</title>
+    <style>
+        #locationResult {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Geolocation Example</h2>
+
+<button onclick="getCurrentLocation()">Get Current Location</button>
+<div id="locationResult"></div>
+
+<script>
+    function getCurrentLocation() {
+        var locationResult = document.getElementById('locationResult');
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    locationResult.innerHTML = `
+                        <strong>Latitude:</strong> ${latitude}<br>
+                        <strong>Longitude:</strong> ${longitude}
+                    `;
+                },
+                function(error) {
+                    handleLocationError(error, locationResult);
+                }
+            );
+        } else {
+            locationResult.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function handleLocationError(error, locationResult) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                locationResult.innerHTML = "User denied the request for geolocation.";
+                break;
+            case error.POSITION_UNAVAILABLE:
+                locationResult.innerHTML = "Location information is unavailable.";
+                break;
+            case error.TIMEOUT:
+                locationResult.innerHTML = "The request to get user location timed out.";
+                break;
+            case error.UNKNOWN_ERROR:
+                locationResult.innerHTML = "An unknown error occurred.";
+                break;
+        }
+    }
+</script>
+
+</body>
+</html>

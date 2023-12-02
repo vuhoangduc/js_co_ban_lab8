@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload Example</title>
+    <style>
+        #fileInput {
+            margin-bottom: 10px;
+        }
+
+        #multipleFileInput {
+            margin-bottom: 10px;
+        }
+
+        #fileList {
+            list-style: none;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Upload Single File</h2>
+<input type="file" id="fileInput" onchange="handleSingleFileUpload()" accept=".jpg, .jpeg, .png">
+<div id="singleFileResult"></div>
+
+<h2>Upload Multiple Files</h2>
+<input type="file" id="multipleFileInput" multiple onchange="handleMultipleFileUpload()" accept=".jpg, .jpeg, .png">
+<ul id="fileList"></ul>
+
+<script>
+    function handleSingleFileUpload() {
+        var fileInput = document.getElementById('fileInput');
+        var singleFileResult = document.getElementById('singleFileResult');
+
+        var file = fileInput.files[0];
+
+        if (file) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                singleFileResult.innerHTML = '<strong>File Preview:</strong><br>';
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '100%';
+                singleFileResult.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function handleMultipleFileUpload() {
+        var multipleFileInput = document.getElementById('multipleFileInput');
+        var fileList = document.getElementById('fileList');
+
+        fileList.innerHTML = '';
+
+        var files = multipleFileInput.files;
+
+        for (var i = 0; i < files.length; i++) {
+            var listItem = document.createElement('li');
+            listItem.textContent = files[i].name;
+            fileList.appendChild(listItem);
+        }
+    }
+</script>
+
+</body>
+</html>
